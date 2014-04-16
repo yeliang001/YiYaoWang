@@ -12,7 +12,7 @@
 #include <net/if.h>
 #include <net/if_dl.h>
 #import "sys/sysctl.h"
-#import "Reachability.h"
+#import <Reachability.h>
 
 
 @implementation UIDevice (Common)
@@ -201,7 +201,7 @@
 - (kNetWorkType)judgeNet
 {
     int result;
-    Reachability *r = [Reachability reachabilityWithHostName:@"www.apple.com"];
+    Reachability *r = [Reachability reachabilityWithHostname:@"www.apple.com"];
     switch ([r currentReachabilityStatus])
     {
         case NotReachable:

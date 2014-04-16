@@ -16,7 +16,7 @@
 #import "OrderPackageInfo.h"
 #import "MyOrderInfo.h"
 #import "ResultInfo.h"
-#import "GlobalValue.h"
+#import "Config.h"
 #import "UserInfo.h"
 #import "OrderDetailInfo.h"
 #import "OrderPackageInfo.h"
@@ -408,9 +408,9 @@
 {
     NSDictionary *dic = @{@"orderid" : orderId,
                           @"payversion":@"2", //表示新的支付宝sdk
-                           @"userid" : [GlobalValue getGlobalValueInstance].userInfo.ecUserId,
-                         @"username" : [GlobalValue getGlobalValueInstance].userInfo.uid, //uid是 用户名 ，草。。。。
-                            @"token" : [GlobalValue getGlobalValueInstance].ywToken};
+                          @"userid" : [Config defaultConfig].userId,
+                          @"username" : [Config defaultConfig].username,
+                          @"token" : [Config defaultConfig].token};
     ResponseInfo *response = [self startRequestWithMethod:@"sign.get" param:dic];
     if (response.isSuccessful && response.statusCode == 200)
     {
@@ -440,9 +440,9 @@
 - (OrderDetailInfo *)getOrderDetail:(NSString *)orderId
 {
     NSDictionary *dic = @{@"orderid" : orderId,
-                          @"userid" : [GlobalValue getGlobalValueInstance].userInfo.ecUserId,
-                          @"username" : [GlobalValue getGlobalValueInstance].userInfo.uid, //uid是 用户名 ，草。。。。
-                          @"token" : [GlobalValue getGlobalValueInstance].ywToken};
+                          @"userid" : [Config defaultConfig].userId,
+                          @"username" : [Config defaultConfig].username,
+                          @"token" : [Config defaultConfig].token};
     ResponseInfo *response = [self startRequestWithMethod:@"order.detail" param:dic];
     if (response.isSuccessful && response.statusCode == 200)
     {
@@ -496,7 +496,7 @@
                 orderProduct.productName = pDic[@"goodsName"];
                 orderProduct.price = pDic[@"productPrice"];
                 orderProduct.promotionAmount = [pDic[@"promotionAmount"] floatValue];
-                orderProduct.goodsType = [ ValidValue(pDic[@"goodsType"]) integerValue];
+                orderProduct.goodsType = [pDic[@"goodsType"] integerValue];
                 [resultOrderProductArr addObject:orderProduct];
                 [orderProduct release];
             }
@@ -511,11 +511,11 @@
                 id sid = splitDic[@"id"];
                 
                 splitLog.sid =  [sid isKindOfClass:[NSNull class]]? 0 :[sid intValue];
-                splitLog.logTime = ValidValue(splitDic[@"logTime"]);
-                splitLog.note = ValidValue(splitDic[@"note"]);
-                splitLog.operatorUser = ValidValue(splitDic[@"operator"]);
-                splitLog.orderId = ValidValue(splitDic[@"orderId"]);
-                splitLog.status = ValidValue(splitDic[@"status"]);
+                splitLog.logTime = splitDic[@"logTime"];
+                splitLog.note = splitDic[@"note"];
+                splitLog.operatorUser = splitDic[@"operator"];
+                splitLog.orderId = splitDic[@"orderId"];
+                splitLog.status = splitDic[@"status"];
                 
                 [resultSplitArr addObject:splitLog];
                 [splitLog release];
@@ -551,7 +551,7 @@
         contact.sendReceivePeople = contactDic[@"send_ReceivePeople"];
     
         contact.sendContactMobile =  contactDic[@"send_ContactMobile"];
-        contact.sendContactPhone = ValidValue(contactDic[@"send_ContactPhone"]);
+        contact.sendContactPhone = contactDic[@"send_ContactPhone"];
         contact.sendEmail = contactDic[@"send_Email"];
         contact.invoiceFee = [contactDic[@"invoiceFee"] intValue];
         contact.invoiceData = contactDic[@"invoiceData"];
@@ -593,9 +593,9 @@
 {
     NSDictionary *dic = @{@"orderid" : orderId,
                       @"orderstatus" : aOrderStaus,
-                           @"userid" : [GlobalValue getGlobalValueInstance].userInfo.ecUserId,
-                         @"username" : [GlobalValue getGlobalValueInstance].userInfo.uid, //uid是 用户名 ，草。。。。
-                            @"token" : [GlobalValue getGlobalValueInstance].ywToken};
+                          @"userid" : [Config defaultConfig].userId,
+                          @"username" : [Config defaultConfig].username,
+                          @"token" : [Config defaultConfig].token};
     
     ResponseInfo *response = [self startRequestWithMethod:@"order.cancel" param:dic];
     if (response.isSuccessful && response.statusCode == 200)

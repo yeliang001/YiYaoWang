@@ -14,15 +14,15 @@
 
 @implementation YWUserService
 
-- (LoginResultInfo *)login:(NSDictionary *)paramDic
+- (ResultInfo *)login:(NSDictionary *)paramDic
 {
     
     DebugLog(@"test520 自动登陆 YWUserService login");
     ResponseInfo *response = [self startRequestWithMethod:@"customer.login" param:paramDic];
-    LoginResultInfo *loginInfo = [[LoginResultInfo alloc] init];
+    ResultInfo *loginInfo = [[LoginResultInfo alloc] init];
     loginInfo.responseCode = response.statusCode;
     loginInfo.bRequestStatus = response.isSuccessful;
-    loginInfo.errorInfo = response.desc;
+//    loginInfo.errorInfo = response.desc;
    
     if (loginInfo.responseCode != -100)  //response.isSuccessful && response.statusCode == 200)
     {
@@ -39,8 +39,8 @@
                 NSString *token = userDic[@"token"];
                 NSString *security = userDic[@"security"];
                 loginInfo.resultCode = resultCode;
-                loginInfo.token = token;
-                loginInfo.security = security;
+//                loginInfo.token = token;
+//                loginInfo.security = security;
                 
                 NSDictionary *customerDic = userDic[@"customer"];
                 UserInfo *userInfo = [[UserInfo alloc] init];
@@ -77,7 +77,10 @@
                 userInfo.userLevelEndTime = customerDic[@"userLevelEndTime"];
                 userInfo.userId = customerDic[@"userId"];
                 
-                loginInfo.userInfo = userInfo;
+                userInfo.token = token;
+                userInfo.security = security;
+                
+                loginInfo.resultObject = userInfo;
                 [userInfo release];
             }
         }

@@ -7,6 +7,13 @@
 //
 
 #import "AppDelegate.h"
+#import "HomeViewController.h"
+#import "CategoryViewController.h"
+#import "CartViewController.h"
+#import "MyAccountViewController.h"
+#import "MoreViewController.h"
+#import "YWTabBarViewController.h"
+
 
 @implementation AppDelegate
 
@@ -15,6 +22,39 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
+    
+    HomeViewController *homeVC = [[HomeViewController alloc] initWithNibName:@"HomeViewController" bundle:nil];
+    CategoryViewController *categoryVC = [[CategoryViewController alloc] initWithNibName:@"CategoryViewController" bundle:nil];
+    CartViewController *cartVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
+    MyAccountViewController *accoutVC = [[MyAccountViewController alloc] initWithNibName:@"MyAccountViewController" bundle:nil];
+    MoreViewController *moreVC = [[MoreViewController alloc] initWithNibName:@"MoreViewController" bundle:nil];
+    
+    UINavigationController *navi1 = [[UINavigationController alloc] initWithRootViewController:homeVC];
+    UINavigationController *navi2 = [[UINavigationController alloc] initWithRootViewController:categoryVC];
+    UINavigationController *navi3 = [[UINavigationController alloc] initWithRootViewController:cartVC];
+    UINavigationController *navi4 = [[UINavigationController alloc] initWithRootViewController:accoutVC];
+    UINavigationController *navi5 = [[UINavigationController alloc] initWithRootViewController:moreVC];
+    
+//    UITabBarItem *homeItem = [[UITabBarItem alloc] initWithTitle:@"首页" image:[UIImage imageNamed:@"tabbar_homepage_unsel.png"]  selectedImage:[UIImage imageNamed:@"tabbar_homepage_sel.png"]];
+//    navi1.tabBarItem = homeItem;
+    
+//    UITabBarItem *categoryItem = [[UITabBarItem alloc] initWithTitle:@"分类" image:[UIImage imageNamed:@""]  selectedImage:[UIImage imageNamed:@""]];
+//    UITabBarItem *cartItem = [[UITabBarItem alloc] initWithTitle:@"首页" image:[UIImage imageNamed:@""]  selectedImage:[UIImage imageNamed:@""]];
+//    UITabBarItem *accountItem = [[UITabBarItem alloc] initWithTitle:@"首页" image:[UIImage imageNamed:@""]  selectedImage:[UIImage imageNamed:@""]];
+//    UITabBarItem *moreItem = [[UITabBarItem alloc] initWithTitle:@"首页" image:[UIImage imageNamed:@""]  selectedImage:[UIImage imageNamed:@""]];
+//    
+    
+    
+    YWTabBarViewController *tabbarVC = [[YWTabBarViewController alloc] init];
+    tabbarVC.viewControllers = @[navi1,navi2,navi3,navi4,navi5];
+    tabbarVC.delegate = self;
+    self.window.rootViewController = tabbarVC;
+    
+    
+    
+    
+    
+    
     [self.window makeKeyAndVisible];
     return YES;
 }
@@ -44,6 +84,21 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+
+
+#pragma mark -
+#pragma mark UITabBarControllerDelegate methods
+- (void)tabBarController:(UITabBarController *)tabBar didSelectViewController:(UIViewController *)viewController
+{
+    YWTabBarViewController *ywTab = (YWTabBarViewController *)tabBar;
+    
+    NSInteger index = [tabBar.viewControllers indexOfObject:viewController];
+    
+    [ywTab selectItemAtIndex:index];
+    
+
 }
 
 @end

@@ -12,7 +12,7 @@
 #import "ResponseInfo.h"
 #import "NSString+Common.h"
 #import "JSONKit.h"
-#import "GlobalValue.h"
+#import "Config.h"
 
 #define kVenderId @"2011102716210000" //@"2011102716210000"
 #define KAppKey @"3452AB32D98C987E798E010D798E010D" //@"3452AB32D98C987E798E010D798E010D"
@@ -164,23 +164,23 @@
 //预生产
     NSString *preUrlString = [NSString stringWithFormat:@"http://101.226.186.59/ApiControl?sign=%@&timestamp=%@&os=iphone&venderId=%@&method=%@&signMethod=md5&format=json&type=mobile",sign,timeReq,kVenderId,method/*,[GlobalValue getGlobalValueInstance].provinceId*/];
 
-    if ([GlobalValue getGlobalValueInstance].hostIndex == 0)
+    if ([Config defaultConfig].hostIndex == 0)
     {
         //0－>生产服务器
         DebugLog(@"URL-> %@",urlString);
         return urlString;
     }
-    else if ([GlobalValue getGlobalValueInstance].hostIndex == 1)
+    else if ([Config defaultConfig].hostIndex == 1)
     {
         DebugLog(@"URL-> %@",ceshiUrlString);
         return ceshiUrlString;
     }
-    else if ([GlobalValue getGlobalValueInstance].hostIndex == 2)
+    else if ([Config defaultConfig].hostIndex == 2)
     {
         DebugLog(@"URL-> %@",liLiUrlString);
         return liLiUrlString;
     }
-    else if ([GlobalValue getGlobalValueInstance].hostIndex == 3)
+    else if ([Config defaultConfig].hostIndex == 3)
     {
         return preUrlString;
     }

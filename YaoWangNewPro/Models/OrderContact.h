@@ -7,7 +7,7 @@
 //  订单详情中的联系人信息
 
 #import <Foundation/Foundation.h>
-#import "YWConst.h"
+
 
 typedef enum{
     kYaoWantSendWordDay = 1,//工作日送

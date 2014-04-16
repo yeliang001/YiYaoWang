@@ -7,7 +7,7 @@
 //  订单详细中发票信息
 
 #import <Foundation/Foundation.h>
-#import "YWConst.h"
+
 @interface InvoiceInfo : NSObject
 
 @property (copy, nonatomic) NSString *openBank; //开户银行

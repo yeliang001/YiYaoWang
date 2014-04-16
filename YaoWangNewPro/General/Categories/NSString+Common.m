@@ -28,7 +28,7 @@
         formater = @"yyyy-MM-dd";
     }
     
-    NSDateFormatter* formatter = [[[NSDateFormatter alloc] init] autorelease];
+    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
     [formatter setDateStyle:NSDateFormatterMediumStyle];
     [formatter setTimeStyle:NSDateFormatterShortStyle];
     [formatter setDateFormat:formater];
@@ -51,9 +51,7 @@
         sizeStr = [NSString stringWithFormat:@"%0.1fKB",fileSize/1024.0];
     }
     
-    
     return sizeStr;
-
 }
 
 
@@ -65,6 +63,7 @@
     NSMutableString *hash = [NSMutableString string];
     for (int i = 0; i < 16; i++)
         [hash appendFormat:@"%02X", result[i]];
+    
     return [hash uppercaseString];
 }
 @end

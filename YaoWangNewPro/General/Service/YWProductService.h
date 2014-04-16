@@ -12,9 +12,10 @@
 @class ProductInfo;
 @class CommentInfo;
 @class CartInfo;
+@class ResultInfo;
 @interface YWProductService : YWBaseService
 
-- (Page *)getHomeSpcecialList;
+- (ResultInfo *)getHomeSpcecialList;
 - (Page *)getCategory;
 
 - (ProductInfo *)getProductDetail:(NSDictionary *)paramDic;

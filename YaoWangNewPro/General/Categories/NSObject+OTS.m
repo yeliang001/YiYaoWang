@@ -70,7 +70,6 @@ void RunBlockAfterDelay(NSTimeInterval delay, void (^block)(void))
 // 开新线程(内存安全)
 -(void)otsDetatchMemorySafeNewThreadSelector:(SEL)aSelector toTarget:(id)aTarget withObject:(id)anArgument
 {
-    AlwaysLog(@"target class:%@", [[aTarget class] description]); // 在此检查target
     
     if (aTarget && aSelector && [aTarget respondsToSelector:aSelector])
     {

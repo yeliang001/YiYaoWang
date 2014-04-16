@@ -8,7 +8,7 @@
 
 #import "YWBaseService.h"
 @class ResultInfo;
-@interface GroupService : YWBaseService
+@interface YWGroupService : YWBaseService
 
 
 - (ResultInfo *)getGroupList:(NSDictionary *)dic;

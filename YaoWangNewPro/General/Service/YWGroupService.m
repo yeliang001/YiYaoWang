@@ -6,11 +6,11 @@
 //
 //
 
-#import "GroupService.h"
+#import "YWGroupService.h"
 #import "ResultInfo.h"
 #import "ResponseInfo.h"
 #import "ProductInfo.h"
-@implementation GroupService
+@implementation YWGroupService
 
 
 - (ResultInfo *)getGroupList:(NSDictionary *)dic

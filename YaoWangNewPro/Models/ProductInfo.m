@@ -7,8 +7,6 @@
 //
 
 #import "ProductInfo.h"
-#import "GlobalValue.h"
-#import "YWConst.h"
 
 @implementation SeriesProductInfo
 @end
@@ -103,7 +101,7 @@
             NSArray *sArr = [storeStr componentsSeparatedByString:@"_"];
             if (sArr.count >= 2)
             {
-                if ([sArr[0] intValue] == [GlobalValue getGlobalValueInstance].currentRepertory)
+                if ([sArr[0] intValue] == [Config defaultConfig].currentRepertory)
                 {
                     return [sArr[1] intValue];
                 }

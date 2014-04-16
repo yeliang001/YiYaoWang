@@ -11,13 +11,10 @@
 #import "FMResultSet.h"
 #import "FMDatabaseQueue.h"
 #import "GoodReceiverVO.h"
-#import "GlobalValue.h"
 #import "UserInfo.h"
 #import "ResponseInfo.h"
 #import "GoodReceiverVO.h"
-
 #import "ResultInfo.h"
-#import "YWConst.h"
 @implementation AddressInfo
 
 - (void)dealloc
@@ -71,7 +68,7 @@
     result.responseCode = response.statusCode;
     
     NSDictionary *dataDic = response.data;
-    result.resultCode = dataDic[@"result"];
+    result.resultCode = [dataDic[@"result"] intValue];
     
     NSArray *arr = dataDic[@"province_list"];
     for (NSDictionary *dic in arr)
@@ -127,7 +124,7 @@
     result.responseCode = response.statusCode;
     
     NSDictionary *dataDic = response.data;
-    result.resultCode = dataDic[@"result"];
+    result.resultCode = [dataDic[@"result"] intValue];
     
     NSArray *arr = dataDic[@"city_list"];
     for (NSDictionary *dic in arr)
@@ -186,7 +183,7 @@
     result.responseCode = response.statusCode;
     
     NSDictionary *dataDic = response.data;
-    result.resultCode = dataDic[@"result"];
+    result.resultCode = [dataDic[@"result"] intValue];
     
     NSArray *arr = dataDic[@"county_list"];
     for (NSDictionary *dic in arr)
@@ -232,8 +229,9 @@
 {
     ResultInfo *result = [[ResultInfo alloc] init];
     
-    NSDictionary *dic = @{@"userid": [GlobalValue getGlobalValueInstance].userInfo.ecUserId,
-                          @"username":[GlobalValue getGlobalValueInstance].userInfo.uid,
+    NSDictionary *dic = @{@"token":[Config defaultConfig].token,
+                          @"userid": [Config defaultConfig].userId,
+                          @"username":[Config defaultConfig].username,
                           @"realname":recevice.receiveName,
                           @"postcode":@"000000",
                           @"address":recevice.address1,
@@ -248,7 +246,7 @@
                           @"provincename":recevice.provinceName,
                           @"cityname":recevice.cityName,
                           @"countyname":recevice.countyName,
-                          @"token":[GlobalValue getGlobalValueInstance].ywToken,};
+                         };
     ResponseInfo *response = [self startRequestWithMethod:@"add.address" param:dic];
     
     NSDictionary *dataDic = response.data;
@@ -277,8 +275,9 @@
 {
     ResultInfo *result = [[ResultInfo alloc] init];
     
-    NSDictionary *dic = @{  @"userid": [GlobalValue getGlobalValueInstance].userInfo.ecUserId,
-                            @"username":[GlobalValue getGlobalValueInstance].userInfo.uid,
+    NSDictionary *dic = @{  @"token":[Config defaultConfig].token,
+                            @"userid": [Config defaultConfig].userId,
+                            @"username":[Config defaultConfig].username,
                             @"addressid":[recevice.nid stringValue],
                             @"realname":recevice.receiveName,
                             @"postcode":@"000000",
@@ -293,8 +292,8 @@
                             @"addresstype": @"0", // 0 是普通地址，1 是一键下单地址
                             @"provincename":recevice.provinceName,
                             @"cityname":recevice.cityName,
-                            @"countyname":recevice.countyName,
-                            @"token":[GlobalValue getGlobalValueInstance].ywToken,};
+                            @"countyname":recevice.countyName
+                            };
     
     ResponseInfo *response = [self startRequestWithMethod:@"update.address" param:dic];
     
@@ -320,9 +319,10 @@
 - (BOOL)deleteGoodRecevicer:(NSString *)addressId
 {
     NSDictionary *dic = @{  @"addressid":addressId,
-                            @"token":[GlobalValue getGlobalValueInstance].ywToken,
-                            @"userid": [GlobalValue getGlobalValueInstance].userInfo.ecUserId,
-                            @"username":[GlobalValue getGlobalValueInstance].userInfo.uid};
+                            @"token":[Config defaultConfig].token,
+                            @"userid": [Config defaultConfig].userId,
+                            @"username":[Config defaultConfig].username
+                            };
                             
     ResponseInfo *response = [self startRequestWithMethod:@"delete.address" param:dic];
     if (response.isSuccessful && response.statusCode == 200)
@@ -341,9 +341,9 @@
 - (NSMutableArray *)getMyGoodRecevicer
 {
     NSDictionary *dic = @{  @"flag" : @"1",
-                            @"token":[GlobalValue getGlobalValueInstance].ywToken,
-                            @"userid": [GlobalValue getGlobalValueInstance].userInfo.ecUserId,
-                            @"username":[GlobalValue getGlobalValueInstance].userInfo.uid};
+                            @"token":[Config defaultConfig].token,
+                            @"userid": [Config defaultConfig].userId,
+                            @"username":[Config defaultConfig].username};
     
     ResponseInfo *response = [self startRequestWithMethod:@"get.address.list" param:dic];
     
@@ -373,8 +373,8 @@
                 recevice.provinceName = dic[@"provinceName"];
                 recevice.receiveName = dic[@"realName"];
                 recevice.receiverEmail =   dic[@"email"];
-                recevice.receiverMobile = ValidValue(dic[@"mobile"]);
-                recevice.receiverPhone = ValidValue(dic[@"tel"]);
+                recevice.receiverMobile = dic[@"mobile"];
+                recevice.receiverPhone = dic[@"tel"];
                 
                 [resultList addObject:recevice];
                 [recevice release];

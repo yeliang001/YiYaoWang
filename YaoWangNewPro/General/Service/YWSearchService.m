@@ -66,7 +66,7 @@
                         product.comments = productDic[@"comments"];
                         product.salesCount = productDic[@"salesCount"];
                         product.attribute = productDic[@"attribute"];
-                        product.specialStatus = productDic[@"specialStatus"];
+                        product.specialStatus = [productDic[@"specialStatus"] intValue];
                         product.filter = productDic[@"filter"];
                         product.prescription = productDic[@"prescription"];
                         product.morePrice = productDic[@"morePrice"];

@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "YWConst.h"
 
 /**
  *促销信息

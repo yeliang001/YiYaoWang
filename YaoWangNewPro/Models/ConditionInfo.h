@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "YWConst.h"
+
 //促销的条件信息  eg:“满100减99”
 @interface ConditionInfo : NSObject
 

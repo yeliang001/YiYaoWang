@@ -7,7 +7,7 @@
 //
 
 #import "UserInfo.h"
-#import "GlobalValue.h"
+
 
 @implementation UserInfo
 
@@ -52,16 +52,6 @@
     [super dealloc];
 }
 
-//- (NSString *)uid
-//{
-//    if ([GlobalValue getGlobalValueInstance].isUnionLogin)
-//    {
-//        return _nickName;
-//    }
-//    else
-//    {
-//        return _uid;
-//    }
-//}
+
 
 @end
