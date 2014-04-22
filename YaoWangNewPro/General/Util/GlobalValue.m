@@ -7,12 +7,12 @@
 //
 
 #import "GlobalValue.h"
-#import "Trader.h"
-#import "ShareToMicroBlog.h"
-#import "OTSWrBoxPageGetter.h"
-#import "OTSUserSwitcher.h"
-#import "NSMutableArray+Stack.h"
-#import "UserVO.h"
+//#import "Trader.h"
+//#import "ShareToMicroBlog.h"
+//#import "OTSWrBoxPageGetter.h"
+//#import "OTSUserSwitcher.h"
+//#import "NSMutableArray+Stack.h"
+//#import "UserVO.h"
 
 
 @implementation GlobalValue
@@ -79,10 +79,10 @@
 
 
 /// 这样使用token 为了区分1号店喝1号商城 ，药店直接忽视，使用ywToken ，艹，尼玛。。。。
-- (NSString*)token
-{
-    return [OTSUserSwitcher sharedInstance].currentToken;
-}
+//- (NSString*)token
+//{
+//    return [OTSUserSwitcher sharedInstance].currentToken;
+//}
 
 - (NSInteger)currentRepertory
 {

@@ -27,4 +27,5 @@
     #import "UITableView+LoadingMore.h"
     #import "Config.h"
 #import "OTSUtility.h"
+#import "GlobalValue.h"
 #endif

@@ -11,6 +11,7 @@
 #import "OTSPageView.h"
 #import "Page.h"
 #import "ResultInfo.h"
+#import "UserManageTool.h"
 
 @interface HomeViewController : YWBaseViewController<EGORefreshTableHeaderDelegate,UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate>
 {

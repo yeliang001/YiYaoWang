@@ -254,7 +254,8 @@
     //自动登录
     if ([[[UserManageTool sharedInstance] GetAutoLoginStatus] isEqualToString:@"1"])
     {
-        [self otsDetatchMemorySafeNewThreadSelector:@selector(newThreadAutoLogin) toTarget:self withObject:nil];
+        /*暂停-叶亮*/
+//        [self otsDetatchMemorySafeNewThreadSelector:@selector(newThreadAutoLogin) toTarget:self withObject:nil];
     }
 }
 
@@ -272,7 +273,8 @@
 	YWSystemService * sServ = [[YWSystemService alloc]init] ;
 	@try {
         VersionInfo *version = [sServ checkVersion];
-        [self performSelectorOnMainThread:@selector(doVersionUpdate:) withObject:version waitUntilDone:NO];
+        /*暂停-叶亮*/
+//        [self performSelectorOnMainThread:@selector(doVersionUpdate:) withObject:version waitUntilDone:NO];
 	}
 	@catch (NSException * e) {
 	}
