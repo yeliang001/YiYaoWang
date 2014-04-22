@@ -40,7 +40,12 @@
 #define ApplicationHeight [UIScreen mainScreen].applicationFrame.size.height
 #define ApplicationWidth [UIScreen mainScreen].applicationFrame.size.width
 
-//
+
+#define OTS_VC_REMOVED                          @"OtsVcRemoved"                // vc管理中，vc被移除
+#define OTS_ENTER_ORDER_DETAIL                  @"ots_enter_order_detail"       // 进入订单详情
+#define OTS_USER_LOG_OUT                        @"OtsUserLogOut"                // 用户登出
+#define OTS_ONLINEPAY_BANK_CHANGED              @"Ots_Onlinepay_Bank_Changed"                // 网上支付选择银行
+#define OTS_NOTIFY_GOTO_CART_AND_REFRESH        @"ots_notify_goto_cart_and_refresh"
 
 
 

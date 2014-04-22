@@ -26,5 +26,5 @@
     #import "UIView+Common.h"
     #import "UITableView+LoadingMore.h"
     #import "Config.h"
-
+#import "OTSUtility.h"
 #endif

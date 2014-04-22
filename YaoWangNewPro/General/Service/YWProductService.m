@@ -693,10 +693,8 @@
     return nil;
 }
 
-
-
-
-
-
+- (Page *)getCategory{
+    return nil;
+}
 
 @end

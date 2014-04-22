@@ -13,6 +13,10 @@
 #import "SpecialRecommendInfo.h"
 #import "OTSAlertView.h"
 #import "NSString+MD5Addition.h"
+#import "ImageCache.h"
+#import "DataController.h"
+#import "YWBaseService.h"
+#import "YWSystemService.h"
 
 #define titleViewHeight 44.0
 #define navHeight 49.0
@@ -23,11 +27,18 @@
 #define ALERT_TAG_APP_START_LAUNCH 106
 #define ALERT_TAG_APP_WAKE  107
 
+
+#define moduleTag 302
+
+#define MODEAL_IMAGE_WIDTH  59
+#define MODEAL_IMAGE_HEIGHT 59
+
 @interface HomeViewController ()
 
 @end
 
 @implementation HomeViewController
+@synthesize modelATable;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -106,13 +117,172 @@
     CGFloat yValueInScroll=0.0;
     m_PageView=[[OTSPageView alloc] initWithFrame:CGRectMake(0, yValueInScroll, 320, 120) delegate:self showStatusBar:YES sleepTime:5];
     [m_ScrollView addSubview:m_PageView];
+    
+    // 功能模块
+    [self initFunctionModules];
+    
+    // 广告模块
+    if (m_AdArray!=nil&&m_AdArray.count>0) {
+        [self updateCMSModuleA];
+    }    
+}
+
+-(void)initFunctionModules
+{
+    CGFloat yValueInScroll=120.0;
+    UIView *moduleView=[[UIView alloc] initWithFrame:CGRectMake(0, yValueInScroll, 320, 100)];
+    moduleView.tag=moduleTag;
+    [m_ScrollView addSubview:moduleView];
+    [moduleView release];
+    
+    CGFloat xValue=14.0;
+    CGFloat yValue=8.0;
+    int i;
+    for (i=0; i<4; i++)
+    {
+        UIButton *button=[[UIButton alloc] initWithFrame:CGRectMake(xValue, yValue, MODEAL_IMAGE_WIDTH, MODEAL_IMAGE_HEIGHT)];
+        [button setTag:100+i];
+        NSString *moduleName = nil;
+        UIImage *image = nil;
+        switch (i)
+        {
+            case 0:
+                moduleName = @"浏览历史";
+                image = [UIImage imageNamed:@"modelhistory.png"];
+                break;
+            case 1:
+                moduleName = @"团购";
+                image = [UIImage imageNamed:@"modeltuan.png"];
+                break;
+            case 2:
+                moduleName=@"扫描";
+                image=[UIImage imageNamed:@"modelscan.png"];
+                break;
+            case 3:
+                moduleName=@"物流查询";
+                image=[UIImage imageNamed:@"modelflow.png"];
+                break;
+            default:
+                break;
+        }
+        [button setImage:image forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(moduleBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [moduleView addSubview:button];
+        [button release];
+        
+        
+        UILabel *label=[[UILabel alloc] initWithFrame:CGRectMake(xValue-13, yValue+60, MODEAL_IMAGE_WIDTH+26, 30)];
+        [label setBackgroundColor:[UIColor clearColor]];
+        [label setText:moduleName];
+        [label setFont:[UIFont systemFontOfSize:14.0]];
+        [label setTextAlignment:NSTextAlignmentCenter];
+        [moduleView addSubview:label];
+        [label release];
+        
+        if (i == 3)
+        {
+            xValue = 14.0;
+            yValue = 100.0;
+        }
+        else
+        {
+            xValue+=77.0;
+        }
+        
+    }
+    modelATable=[[UITableView alloc]initWithFrame:CGRectMake(0, yValueInScroll+100, 320, 750) style:UITableViewStylePlain];
+    modelATable.delegate=self;
+    modelATable.dataSource=self;
+    [m_ScrollView addSubview:modelATable];
+    modelATable.scrollEnabled=NO;
+    
+    moduleView.frame=CGRectMake(0, 120, 320, 100);
+    modelATable.frame=CGRectMake(0, 120/*+200*/, 320, 750); //这里控制高度是没有用，去这里改：adjustModulesHeight
+}
+
+//点击模块
+-(void)moduleBtnClicked:(id)sender
+{
+    UIButton *  button=(UIButton*)sender;
+    int index=[button tag]-100;
+    switch (index)
+    {
+            
+        case 0:
+        {
+            //历史记录
+//            [self removeSubControllerClass:[MyBrowse class]];
+//            MyBrowse *browse=[[[MyBrowse alloc]initWithNibName:@"MyBrowse" bundle:nil] autorelease];
+//            [self pushVC:browse animated:YES];
+            break;
+        }
+            
+        case 3:
+        {
+            //物流查询
+//            [self enterLogisticQuery];
+            break;
+        }
+        case 2:
+        {
+            //扫描
+//            [self removeSubControllerClass:[Scan class]];
+//            Scan *scan=[[[Scan alloc] initWithNibName:@"Scan" bundle:nil] autorelease];
+//            [self pushVC:scan animated:NO];
+            break;
+        }
+        case 1:
+        {
+            //团购
+//            [self enterIntoGroupList];
+            
+            break;
+        }
+            
+        default:
+            break;
+    }
 }
 
 -(void)setUpNewThread{
-    
+    //获取热销图
+    [self otsDetatchMemorySafeNewThreadSelector:@selector(newThreadGetHotPage) toTarget:self withObject:nil];
+    [self otsDetatchMemorySafeNewThreadSelector:@selector(newThreadGetAdultConfig) toTarget:self withObject:nil];
+    //是否需要版本更新
+    [self otsDetatchMemorySafeNewThreadSelector:@selector(newThreadVersionUpdate) toTarget:self withObject:nil];
+    //自动登录
+    if ([[[UserManageTool sharedInstance] GetAutoLoginStatus] isEqualToString:@"1"])
+    {
+        [self otsDetatchMemorySafeNewThreadSelector:@selector(newThreadAutoLogin) toTarget:self withObject:nil];
+    }
 }
 
-#pragma mark - 
+//成人用品分类的配置
+- (void)newThreadGetAdultConfig
+{
+    YWSystemService *ser = [[YWSystemService alloc] init];
+    [GlobalValue getGlobalValueInstance].bShowAdultCategory = [ser isShowAdultCategory];
+}
+
+#pragma mark 版本更新
+//获得版本更新数据
+-(void)newThreadVersionUpdate {
+	NSAutoreleasePool *pool=[[NSAutoreleasePool alloc] init];
+	YWSystemService * sServ = [[YWSystemService alloc]init] ;
+	@try {
+        VersionInfo *version = [sServ checkVersion];
+        [self performSelectorOnMainThread:@selector(doVersionUpdate:) withObject:version waitUntilDone:NO];
+	}
+	@catch (NSException * e) {
+	}
+	@finally {
+        //         [sServ release];
+		[pool drain];
+	}
+}
+
+#pragma mark -
 
 - (void)didReceiveMemoryWarning
 {
@@ -177,13 +347,13 @@
 
 - (void)pageView:(OTSPageView *)pageView didTouchOnPage:(NSIndexPath *)indexPath{
     NSInteger index = [indexPath row];
-    if (index>=[hotTopFivePage.objList count])
+    if (index>=[[hotTopFivePage.resultObject objectAtIndex:0] count])
     {
         return;
     }
     
     
-    SpecialRecommendInfo *recommendInfo = [hotTopFivePage.objList objectAtIndex:index];
+    SpecialRecommendInfo *recommendInfo = [[hotTopFivePage.resultObject objectAtIndex:0] objectAtIndex:index];
     if (recommendInfo.type == kYaoSpecialBrand)
     {
         [self showAlertView:@"" alertMsg:@"品牌页面暂时没有" alertTag:12321];
@@ -203,7 +373,7 @@
 - (UIView *)pageView:(OTSPageView *)pageView pageAtIndexPath:(NSIndexPath *)indexPath{
     UIImageView *imageView=[[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, pageView.frame.size.width, pageView.frame.size.height)] autorelease];
     NSInteger i=[indexPath row];
-    if (i>=[hotTopFivePage.objList count]) {
+    if (i>=[[hotTopFivePage.resultObject objectAtIndex:0] count]) {
         imageView.image = [UIImage imageNamed:@"defaultimg320x120.png"];
     }
     else
@@ -213,24 +383,24 @@
         //        NSString *fileName=[((HotPointNewVO *)[hotTopFivePage.objList objectAtIndex:i]).picUrl stringFromMD5];
         //        UIImage *image=[ImageCache getImageFromFile:fileName];
         
-//        NSString *fileName=[((SpecialRecommendInfo *)[hotTopFivePage.objList objectAtIndex:i]).imageUrl stringFromMD5];
-//        UIImage *image=[ImageCache getImageFromFile:fileName];
-//        if (image != nil) {
-//            imageView.image = image;
-//        } else {
-//            imageView.image = [UIImage imageNamed:@"defaultimg320x120.png"];
-//        }
+        NSString *fileName=[((SpecialRecommendInfo *)[[hotTopFivePage.resultObject objectAtIndex:0] objectAtIndex:i]).imageUrl stringFromMD5];
+        UIImage *image=[ImageCache getImageFromFile:fileName];
+        if (image != nil) {
+            imageView.image = image;
+        } else {
+            imageView.image = [UIImage imageNamed:@"defaultimg320x120.png"];
+        }
     }
     return imageView;
 }
 
 
 - (NSInteger)numberOfPagesInPageView:(OTSPageView *)pageView {
-    if (hotTopFivePage==nil || hotTopFivePage.objList==nil)
+    if (hotTopFivePage==nil || [hotTopFivePage.resultObject objectAtIndex:0]==nil)
     {
         return 1;
     }
-    return [hotTopFivePage.objList count];
+    return [[hotTopFivePage.resultObject objectAtIndex:0] count];
 }
 
 //显示提示框
@@ -253,6 +423,196 @@
 	[alert show];
 	[alert release];
 	alert = nil;
+}
+
+#pragma mark - refreshHomePageData
+//刷新首页数据
+-(void)refreshHomePageData
+{
+    //刷新热销图
+    if (!isRefreshingHotPage && !isRefreshingAd) {
+        isRefreshingHotPage=YES;
+        isRefreshingAd = YES;
+        [self otsDetatchMemorySafeNewThreadSelector:@selector(newThreadGetHotPage) toTarget:self withObject:nil];
+    }
+}
+
+//下拉刷新停止
+-(void)stopEgoRefresh
+{
+    if (!isRefreshingHotPage && !isRefreshingAd) {
+        [m_RefreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:m_ScrollView];
+    }
+}
+
+
+#pragma mark - 热销图
+//***** 轮播图 ************
+-(void)newThreadGetHotPage {
+    DebugLog(@"test520 自动登陆 newThreadGetHotPage");
+    
+	NSAutoreleasePool *pool=[[NSAutoreleasePool alloc] init];
+    
+    //Linpan
+    YWProductService *productSer = [[YWProductService alloc] init];
+    ResultInfo *tempPage = [productSer getHomeSpcecialList];
+    isRefreshingHotPage=NO;
+    
+    isRefreshingAd = NO;
+    
+    
+    if (tempPage!=nil && ![tempPage isKindOfClass:[NSNull class]])
+    {
+        if (hotTopFivePage!=nil)
+        {
+            [hotTopFivePage release];
+        }
+        hotTopFivePage=[tempPage retain];
+        for (int i=0; i<[[hotTopFivePage.resultObject objectAtIndex:0] count]; i++)
+        {
+            NSString *fileName;
+            NSString *hotProductImgUrlStr=((SpecialRecommendInfo *)[[hotTopFivePage.resultObject objectAtIndex:0] objectAtIndex:i]).imageUrl;
+            if (hotProductImgUrlStr==nil)
+            {
+                continue;
+            }
+            NSData *data=[NSData dataWithContentsOfURL:[NSURL URLWithString:hotProductImgUrlStr]];
+            fileName=[hotProductImgUrlStr stringFromMD5];
+            
+            [DataController writeApplicationData:data name:fileName];
+            [self savePagesToLocal:hotTopFivePage];
+        }
+        
+        //楼层广告
+        m_AdArray = [[hotTopFivePage.resultObject objectAtIndex:1] retain];
+        [self performSelectorOnMainThread:@selector(updateHotPage) withObject:nil waitUntilDone:YES];
+        
+    }
+    [self performSelectorOnMainThread:@selector(stopEgoRefresh) withObject:nil waitUntilDone:NO];
+    
+    
+    [productSer release];
+    
+	[pool drain];
+}
+
+//刷新热销图
+-(void)updateHotPage
+{
+    [self.view setUserInteractionEnabled:YES];
+    [m_PageView reloadPageView];
+    
+    //焦点图和楼层一起了
+    [self updateCMSModuleA];
+}
+
+//刷新模块A列表
+-(void)updateCMSModuleA
+{
+    UIView*moduleView=[m_ScrollView viewWithTag:moduleTag];
+    CGFloat yValueInScroll=120+moduleView.frame.size.height;
+    [modelATable reloadData];
+    [self adjustModulesHeight];
+    int  increace = m_AdArray.count;
+    [m_ScrollView setContentSize:CGSizeMake(320, yValueInScroll+increace*250.0)];
+}
+
+-(void)adjustModulesHeight{
+    UIView*moduleView=[m_ScrollView viewWithTag:moduleTag];
+    
+    //8个模块被写死，所以不需要调整高度了－－－－ Linpan
+    moduleView.frame=CGRectMake(0, 120, 320, 100);
+    modelATable.frame=CGRectMake(0, 120+100, 320, 750*m_AdArray.count); //改为了4个模块，所以y ＝ 120 ＋ 100
+}
+
+-(void)savePagesToLocal:(ResultInfo*)aPage
+{
+    NSString *filename=[OTSUtility documentDirectoryWithFileName:@"SaveHotPages_130502.plist"];
+    NSData* pageData = [NSKeyedArchiver archivedDataWithRootObject:aPage];
+    [pageData writeToFile:filename atomically:NO];
+}
+
+-(Page*)getPagesFromLocal
+{
+    NSString *filename=[OTSUtility documentDirectoryWithFileName:@"SaveHotPages_130502.plist"];
+    Page* aPage = [NSKeyedUnarchiver unarchiveObjectWithFile:filename];
+    return aPage;
+}
+
+#pragma mark EGORefreshTableHeaderView相关delegate
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view {
+    [self refreshHomePageData];
+}
+
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view {
+	return isRefreshingHotPage;
+}
+
+- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view {
+	return [NSDate date];
+}
+
+#pragma mark - tableView相关delegate
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    DebugLog(@" m_AdArray.count--> %d", m_AdArray.count);
+    return m_AdArray.count;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 250.0;
+}
+
+-(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+//    static NSString* identify=@"cell";
+//    HomePageModelACell* cell=[tableView dequeueReusableCellWithIdentifier:identify];
+//    if (cell==nil)
+//    {
+//        cell=[[[HomePageModelACell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identify] autorelease];
+//    }
+//    cell.delegate=self;
+//    
+//    DebugLog(@"m_array -> %@",m_AdArray);
+//    AdFloorInfo *floor = m_AdArray[indexPath.row];
+//    if (floor && [floor isKindOfClass:[AdFloorInfo class]])
+//    {
+//        NSLog(@"floor.keywordList  %@   %@",floor.keywordList,floor.title);
+//        
+//        cell.keywordsArray = floor.keywordList;
+//        cell.selectionStyle=UITableViewCellSelectionStyleNone;
+//        cell.tag=indexPath.row;
+//        
+//        if (floor.productList.count >= 1)
+//        {
+//            SpecialRecommendInfo *product = floor.productList[0];
+//            [cell loadBigImg:product.imageUrl title:product.name subTitle:product.name];
+//        }
+//        
+//        if (floor.productList.count >= 2)
+//        {
+//            SpecialRecommendInfo *product1 = floor.productList[1];
+//            [cell loadFistImg:product1.imageUrl title:product1.name subTitle:product1.name];
+//        }
+//        
+//        if (floor.productList.count >= 3)
+//        {
+//            SpecialRecommendInfo *product2 = floor.productList[2];
+//            [cell loadsecondImg:product2.imageUrl title:product2.name subTitle:product2.name];
+//        }
+//        
+//        [cell loadTitleImage:floor.titleImgUrl];
+//        
+//        
+//        int style= 1;
+//        NSString* tit=floor.title;
+//        //        if (tit!=nil&&[tit isKindOfClass:[NSString class]]&&tit.length>0) {
+//        [cell freshCell:indexPath.row style:style title:tit];
+//        //        }
+//    }
+//    return cell;
+
+    return nil;
 }
 
 @end

@@ -10,8 +10,8 @@
 #import "ResponseInfo.h"
 #import "VersionInfo.h"
 #import "ResultInfo.h"
-@implementation YWSystemService
 
+@implementation YWSystemService
 
 - (VersionInfo *)checkVersion
 {
