@@ -13,7 +13,11 @@
 #define SharedPadDelegate   ((AppDelegate *)[UIApplication sharedApplication].delegate)
 #define kURLScheme @"yhyw_iphone"
 
+//ios7
+#define ISIOS7 [[[UIDevice currentDevice] systemVersion] floatValue] >= 7
 
+// RELEASE AND SET NIL
+#define OTS_SAFE_RELEASE(_obj) if ((_obj)) {[(_obj) release]; (_obj) = nil;}
 
 //Address
 #define kYaoDefaultProvinceName @"上海市"
@@ -28,6 +32,15 @@
 #define SORT_BY_COMMENT_DESC 3 //好评最高
 #define SORT_BY_SALE  4        //销量最高
 
+//Screen
+#define iPhone5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
+#define ScreenHeight [UIScreen mainScreen].bounds.size.height
+#define ScreenWidth [UIScreen mainScreen].bounds.size.width
+
+#define ApplicationHeight [UIScreen mainScreen].applicationFrame.size.height
+#define ApplicationWidth [UIScreen mainScreen].applicationFrame.size.width
+
+//
 
 
 

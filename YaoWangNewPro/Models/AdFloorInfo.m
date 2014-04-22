@@ -19,8 +19,6 @@
     [super dealloc];
 }
 
-
-
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
     [aCoder encodeObject:_title forKey:@"title"];

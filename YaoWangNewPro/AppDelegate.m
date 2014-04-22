@@ -14,7 +14,6 @@
 #import "MoreViewController.h"
 #import "YWTabBarViewController.h"
 
-
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -49,11 +48,6 @@
     tabbarVC.viewControllers = @[navi1,navi2,navi3,navi4,navi5];
     tabbarVC.delegate = self;
     self.window.rootViewController = tabbarVC;
-    
-    
-    
-    
-    
     
     [self.window makeKeyAndVisible];
     return YES;

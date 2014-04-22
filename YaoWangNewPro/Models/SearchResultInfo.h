@@ -1,3 +1,4 @@
+
 //
 //  SearchResultInfo.h
 //  TheStoreApp

@@ -28,6 +28,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
+
 - (void)setViewControllers:(NSArray *)viewControllers
 {
     [super setViewControllers:viewControllers];
@@ -68,7 +69,6 @@
         [[tabViews objectAtIndex:currentIndex] setImage:[selImgArray objectAtIndex:0]];
     }
     [[self tabBar] setSelectionIndicatorImage:[UIImage imageNamed:@"transparent.png"]];
-
 }
 
 
