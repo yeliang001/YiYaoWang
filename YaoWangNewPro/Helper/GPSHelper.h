@@ -14,7 +14,7 @@
 
 @optional
 - (void)didGPSHelperLocationingSucceed:(NSString *)province;
-- (void)didGPSHelperLocationingFailed:(NSString *)error;
+- (void)didGPSHelperLocationingFailed:(NSError *)error;
 
 @end
 

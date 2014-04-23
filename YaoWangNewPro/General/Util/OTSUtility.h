@@ -35,7 +35,7 @@
 //+(void)horizontalCenterViews:(NSArray*)aViews inView:(UIView*)aSuperView margin:(NSUInteger)aMargin;
 //
 //// other
-//+(id)safeObjectAtIndex:(int)aIndex inArray:(NSArray*)anArray; //返回数组anArray的第 aIndex 个元素
++(id)safeObjectAtIndex:(int)aIndex inArray:(NSArray*)anArray; //返回数组anArray的第 aIndex 个元素
 //+(void)callWithPhoneNumber:(NSString*)aPhoneNumber;
 //+(NSString*)chineseForDigit:(int)aDigit;
 +(NSString*)documentDirectoryWithFileName:(NSString*)name; //拿到document目录下name目录的路径

@@ -23,15 +23,15 @@
     return file;
 }
 
-//+(id)safeObjectAtIndex:(int)aIndex inArray:(NSArray*)anArray
-//{
-//    if (anArray && aIndex >=0 && aIndex < [anArray count])
-//    {
-//        return [anArray objectAtIndex:aIndex];
-//    }
-//    
-//    return nil;
-//}
++(id)safeObjectAtIndex:(int)aIndex inArray:(NSArray*)anArray
+{
+    if (anArray && aIndex >=0 && aIndex < [anArray count])
+    {
+        return [anArray objectAtIndex:aIndex];
+    }
+    
+    return nil;
+}
 
 
 //缓存page

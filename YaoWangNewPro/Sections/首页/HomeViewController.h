@@ -12,8 +12,8 @@
 #import "Page.h"
 #import "ResultInfo.h"
 #import "UserManageTool.h"
-
-@interface HomeViewController : YWBaseViewController<EGORefreshTableHeaderDelegate,UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate>
+#import "HomePageModelACell.h"
+@interface HomeViewController : YWBaseViewController<EGORefreshTableHeaderDelegate,UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,HomePageModelACellDelegate>
 {
     
     EGORefreshTableHeaderView *m_RefreshHeaderView;         //下拉刷新控件

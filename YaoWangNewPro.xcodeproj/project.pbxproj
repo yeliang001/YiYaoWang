@@ -27,6 +27,14 @@
 		6732514E18FF7273003A33C9 /* tabbar_homepage_unsel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6732514C18FF7273003A33C9 /* tabbar_homepage_unsel@2x.png */; };
 		6732515018FF73F6003A33C9 /* transparent.png in Resources */ = {isa = PBXBuildFile; fileRef = 6732514F18FF73F6003A33C9 /* transparent.png */; };
 		6732515418FFAD07003A33C9 /* OTSLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6732515318FFAD07003A33C9 /* OTSLoadingView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		67E1EB8619078A7300986A3F /* HomePageModelACell.m in Sources */ = {isa = PBXBuildFile; fileRef = 671E1DA519066546006E4683 /* HomePageModelACell.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		67E1EB9619078AEF00986A3F /* readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = 67E1EB8819078AEF00986A3F /* readme.txt */; };
+		67E1EB9719078AEF00986A3F /* SDButton+SDWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 67E1EB8A19078AEF00986A3F /* SDButton+SDWebCache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		67E1EB9819078AEF00986A3F /* SDDataCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 67E1EB8C19078AEF00986A3F /* SDDataCache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		67E1EB9919078AEF00986A3F /* SDImageView+SDWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 67E1EB8E19078AEF00986A3F /* SDImageView+SDWebCache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		67E1EB9A19078AEF00986A3F /* SDNetworkActivityIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 67E1EB9019078AEF00986A3F /* SDNetworkActivityIndicator.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		67E1EB9B19078AEF00986A3F /* SDWebDataDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 67E1EB9219078AEF00986A3F /* SDWebDataDownloader.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		67E1EB9C19078AEF00986A3F /* SDWebDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 67E1EB9419078AEF00986A3F /* SDWebDataManager.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6DD626AC9DA24052922EB4BC /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CBFA66E4D8E471FAEC95AC1 /* libPods.a */; };
 		A390AA0418DD5D8600DE643D /* YWTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A390AA0318DD5D8600DE643D /* YWTabBarViewController.m */; };
 		A395CE0A18DBEE7900C0E0FB /* YWBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A395CE0918DBEE7900C0E0FB /* YWBaseViewController.m */; };
@@ -158,6 +166,20 @@
 		6732514F18FF73F6003A33C9 /* transparent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = transparent.png; path = Image/transparent.png; sourceTree = "<group>"; };
 		6732515218FFAD07003A33C9 /* OTSLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTSLoadingView.h; sourceTree = "<group>"; };
 		6732515318FFAD07003A33C9 /* OTSLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTSLoadingView.m; sourceTree = "<group>"; };
+		67E1EB8819078AEF00986A3F /* readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme.txt; sourceTree = "<group>"; };
+		67E1EB8919078AEF00986A3F /* SDButton+SDWebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SDButton+SDWebCache.h"; sourceTree = "<group>"; };
+		67E1EB8A19078AEF00986A3F /* SDButton+SDWebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SDButton+SDWebCache.m"; sourceTree = "<group>"; };
+		67E1EB8B19078AEF00986A3F /* SDDataCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDDataCache.h; sourceTree = "<group>"; };
+		67E1EB8C19078AEF00986A3F /* SDDataCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDDataCache.m; sourceTree = "<group>"; };
+		67E1EB8D19078AEF00986A3F /* SDImageView+SDWebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SDImageView+SDWebCache.h"; sourceTree = "<group>"; };
+		67E1EB8E19078AEF00986A3F /* SDImageView+SDWebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SDImageView+SDWebCache.m"; sourceTree = "<group>"; };
+		67E1EB8F19078AEF00986A3F /* SDNetworkActivityIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDNetworkActivityIndicator.h; sourceTree = "<group>"; };
+		67E1EB9019078AEF00986A3F /* SDNetworkActivityIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDNetworkActivityIndicator.m; sourceTree = "<group>"; };
+		67E1EB9119078AEF00986A3F /* SDWebDataDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebDataDownloader.h; sourceTree = "<group>"; };
+		67E1EB9219078AEF00986A3F /* SDWebDataDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebDataDownloader.m; sourceTree = "<group>"; };
+		67E1EB9319078AEF00986A3F /* SDWebDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebDataManager.h; sourceTree = "<group>"; };
+		67E1EB9419078AEF00986A3F /* SDWebDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebDataManager.m; sourceTree = "<group>"; };
+		67E1EB9519078AEF00986A3F /* SDWebImageCompatibly.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageCompatibly.h; sourceTree = "<group>"; };
 		8EE0CC09F2D143FD996BECBA /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		A390AA0218DD5D8600DE643D /* YWTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWTabBarViewController.h; sourceTree = "<group>"; };
 		A390AA0318DD5D8600DE643D /* YWTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWTabBarViewController.m; sourceTree = "<group>"; };
@@ -365,10 +387,32 @@
 				6732515318FFAD07003A33C9 /* OTSLoadingView.m */,
 				671E1DA119065D83006E4683 /* OTSUtility.h */,
 				671E1DA219065D83006E4683 /* OTSUtility.m */,
+				67E1EB8719078AEF00986A3F /* SDWebData_1.0.2 */,
 				671E1D87190613D2006E4683 /* EGORefresh */,
 				671E1D9119061AAB006E4683 /* Core */,
 			);
 			path = Util;
+			sourceTree = "<group>";
+		};
+		67E1EB8719078AEF00986A3F /* SDWebData_1.0.2 */ = {
+			isa = PBXGroup;
+			children = (
+				67E1EB8819078AEF00986A3F /* readme.txt */,
+				67E1EB8919078AEF00986A3F /* SDButton+SDWebCache.h */,
+				67E1EB8A19078AEF00986A3F /* SDButton+SDWebCache.m */,
+				67E1EB8B19078AEF00986A3F /* SDDataCache.h */,
+				67E1EB8C19078AEF00986A3F /* SDDataCache.m */,
+				67E1EB8D19078AEF00986A3F /* SDImageView+SDWebCache.h */,
+				67E1EB8E19078AEF00986A3F /* SDImageView+SDWebCache.m */,
+				67E1EB8F19078AEF00986A3F /* SDNetworkActivityIndicator.h */,
+				67E1EB9019078AEF00986A3F /* SDNetworkActivityIndicator.m */,
+				67E1EB9119078AEF00986A3F /* SDWebDataDownloader.h */,
+				67E1EB9219078AEF00986A3F /* SDWebDataDownloader.m */,
+				67E1EB9319078AEF00986A3F /* SDWebDataManager.h */,
+				67E1EB9419078AEF00986A3F /* SDWebDataManager.m */,
+				67E1EB9519078AEF00986A3F /* SDWebImageCompatibly.h */,
+			);
+			path = SDWebData_1.0.2;
 			sourceTree = "<group>";
 		};
 		A3A6C89D18D97C08002F0989 = {
@@ -808,6 +852,7 @@
 				A395CE3418DC4DD300C0E0FB /* tabbar_more_sel.png in Resources */,
 				A395CE2318DC268600C0E0FB /* MyAccountViewController.xib in Resources */,
 				671E1D8619060D5F006E4683 /* title_bg.png in Resources */,
+				67E1EB9619078AEF00986A3F /* readme.txt in Resources */,
 				671E1DA9190668DE006E4683 /* cart_gift_select_point.png in Resources */,
 				671E1DAE190668F8006E4683 /* cart_gift_unsel_point@2x.png in Resources */,
 				671E1DAA190668DE006E4683 /* cart_gift_select_point@2x.png in Resources */,
@@ -879,6 +924,7 @@
 				A3A6C97218D9AEDB002F0989 /* VersionInfo.m in Sources */,
 				A395CE1318DC263A00C0E0FB /* CategoryViewController.m in Sources */,
 				A3A6C96518D9AEDB002F0989 /* OrderInfo.m in Sources */,
+				67E1EB9A19078AEF00986A3F /* SDNetworkActivityIndicator.m in Sources */,
 				A3A6C96A18D9AEDB002F0989 /* RegistResultInfo.m in Sources */,
 				A3A6C96E18D9AEDB002F0989 /* SearchResultInfo.m in Sources */,
 				A3A6C95C18D9AEDB002F0989 /* FavoriteProductInfo.m in Sources */,
@@ -889,6 +935,7 @@
 				671E1DA319065D83006E4683 /* OTSUtility.m in Sources */,
 				A3A6C96018D9AEDB002F0989 /* LocalCarInfo.m in Sources */,
 				671E1DB419067CFB006E4683 /* UserManageTool.m in Sources */,
+				67E1EB9919078AEF00986A3F /* SDImageView+SDWebCache.m in Sources */,
 				A3A6C95618D9AEDB002F0989 /* AdFloorInfo.m in Sources */,
 				A3A6C96218D9AEDB002F0989 /* MyOrderInfo.m in Sources */,
 				671E1D9D19063984006E4683 /* ImageCache.m in Sources */,
@@ -907,18 +954,22 @@
 				A3A6C8F818D9AA70002F0989 /* UIDevice+Common.m in Sources */,
 				A3A6C96718D9AEDB002F0989 /* OrderResultInfo.m in Sources */,
 				A3A6C96618D9AEDB002F0989 /* OrderPackageInfo.m in Sources */,
+				67E1EB9819078AEF00986A3F /* SDDataCache.m in Sources */,
 				A3A6C8F518D9AA70002F0989 /* NSObject+OTS.m in Sources */,
 				A3A6C91618D9AE62002F0989 /* YWLocalCatService.m in Sources */,
 				A3D1E55418DA880500A0442D /* Config.m in Sources */,
 				A3A6C95E18D9AEDB002F0989 /* GiftInfo.m in Sources */,
 				A3A6C96318D9AEDB002F0989 /* OrderContact.m in Sources */,
+				67E1EB9C19078AEF00986A3F /* SDWebDataManager.m in Sources */,
 				A3A6C96818D9AEDB002F0989 /* ProductInfo.m in Sources */,
 				A3A6C95818D9AEDB002F0989 /* CategoryInfo.m in Sources */,
 				A3A6C91218D9AE62002F0989 /* YWAddressService.m in Sources */,
 				A3D1E55D18DADCC900A0442D /* GoodReceiverVO.m in Sources */,
 				A3A6C95D18D9AEDB002F0989 /* FavoriteResultInfo.m in Sources */,
 				A3A6C91418D9AE62002F0989 /* YWBrowseService.m in Sources */,
+				67E1EB9B19078AEF00986A3F /* SDWebDataDownloader.m in Sources */,
 				671E1DB1190672CC006E4683 /* GlobalValue.m in Sources */,
+				67E1EB8619078A7300986A3F /* HomePageModelACell.m in Sources */,
 				A3A6C91318D9AE62002F0989 /* YWBaseService.m in Sources */,
 				A3A6C95A18D9AEDB002F0989 /* ConditionInfo.m in Sources */,
 				A395CE1D18DC266100C0E0FB /* CartViewController.m in Sources */,
@@ -942,6 +993,7 @@
 				A3A6C96C18D9AEDB002F0989 /* ResponseInfo.m in Sources */,
 				A3A6C95B18D9AEDB002F0989 /* FareInfo.m in Sources */,
 				A395CE0A18DBEE7900C0E0FB /* YWBaseViewController.m in Sources */,
+				67E1EB9719078AEF00986A3F /* SDButton+SDWebCache.m in Sources */,
 				A395CE0E18DC1B9D00C0E0FB /* HomeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

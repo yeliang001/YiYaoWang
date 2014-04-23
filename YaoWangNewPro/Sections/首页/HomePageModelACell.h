@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AdvertisingPromotionVO.h"
+//#import "AdvertisingPromotionVO.h" /*叶亮*/
 @protocol HomePageModelACellDelegate;
 @interface HomePageModelACell : UITableViewCell
 {

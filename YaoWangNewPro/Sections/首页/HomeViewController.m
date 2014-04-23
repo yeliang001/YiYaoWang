@@ -17,6 +17,7 @@
 #import "DataController.h"
 #import "YWBaseService.h"
 #import "YWSystemService.h"
+#import "AdFloorInfo.h"
 
 #define titleViewHeight 44.0
 #define navHeight 49.0
@@ -269,19 +270,19 @@
 #pragma mark 版本更新
 //获得版本更新数据
 -(void)newThreadVersionUpdate {
-	NSAutoreleasePool *pool=[[NSAutoreleasePool alloc] init];
-	YWSystemService * sServ = [[YWSystemService alloc]init] ;
-	@try {
-        VersionInfo *version = [sServ checkVersion];
-        /*暂停-叶亮*/
-//        [self performSelectorOnMainThread:@selector(doVersionUpdate:) withObject:version waitUntilDone:NO];
-	}
-	@catch (NSException * e) {
-	}
-	@finally {
-        //         [sServ release];
-		[pool drain];
-	}
+//	NSAutoreleasePool *pool=[[NSAutoreleasePool alloc] init];
+//	YWSystemService * sServ = [[YWSystemService alloc]init] ;
+//	@try {
+//        VersionInfo *version = [sServ checkVersion];
+//        /*暂停-叶亮*/
+////        [self performSelectorOnMainThread:@selector(doVersionUpdate:) withObject:version waitUntilDone:NO];
+//	}
+//	@catch (NSException * e) {
+//	}
+//	@finally {
+//        //         [sServ release];
+//		[pool drain];
+//	}
 }
 
 #pragma mark -
@@ -527,10 +528,10 @@
     modelATable.frame=CGRectMake(0, 120+100, 320, 750*m_AdArray.count); //改为了4个模块，所以y ＝ 120 ＋ 100
 }
 
--(void)savePagesToLocal:(ResultInfo*)aPage
+-(void)savePagesToLocal:(ResultInfo*)resultInfo
 {
     NSString *filename=[OTSUtility documentDirectoryWithFileName:@"SaveHotPages_130502.plist"];
-    NSData* pageData = [NSKeyedArchiver archivedDataWithRootObject:aPage];
+    NSData* pageData = [NSKeyedArchiver archivedDataWithRootObject:resultInfo.resultObject];
     [pageData writeToFile:filename atomically:NO];
 }
 
@@ -567,54 +568,92 @@
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    static NSString* identify=@"cell";
-//    HomePageModelACell* cell=[tableView dequeueReusableCellWithIdentifier:identify];
-//    if (cell==nil)
-//    {
-//        cell=[[[HomePageModelACell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identify] autorelease];
-//    }
-//    cell.delegate=self;
-//    
-//    DebugLog(@"m_array -> %@",m_AdArray);
-//    AdFloorInfo *floor = m_AdArray[indexPath.row];
-//    if (floor && [floor isKindOfClass:[AdFloorInfo class]])
-//    {
-//        NSLog(@"floor.keywordList  %@   %@",floor.keywordList,floor.title);
-//        
-//        cell.keywordsArray = floor.keywordList;
-//        cell.selectionStyle=UITableViewCellSelectionStyleNone;
-//        cell.tag=indexPath.row;
-//        
-//        if (floor.productList.count >= 1)
-//        {
-//            SpecialRecommendInfo *product = floor.productList[0];
-//            [cell loadBigImg:product.imageUrl title:product.name subTitle:product.name];
-//        }
-//        
-//        if (floor.productList.count >= 2)
-//        {
-//            SpecialRecommendInfo *product1 = floor.productList[1];
-//            [cell loadFistImg:product1.imageUrl title:product1.name subTitle:product1.name];
-//        }
-//        
-//        if (floor.productList.count >= 3)
-//        {
-//            SpecialRecommendInfo *product2 = floor.productList[2];
-//            [cell loadsecondImg:product2.imageUrl title:product2.name subTitle:product2.name];
-//        }
-//        
-//        [cell loadTitleImage:floor.titleImgUrl];
-//        
-//        
-//        int style= 1;
-//        NSString* tit=floor.title;
-//        //        if (tit!=nil&&[tit isKindOfClass:[NSString class]]&&tit.length>0) {
-//        [cell freshCell:indexPath.row style:style title:tit];
-//        //        }
-//    }
-//    return cell;
+    static NSString* identify=@"cell";
+    HomePageModelACell* cell=[tableView dequeueReusableCellWithIdentifier:identify];
+    if (cell==nil)
+    {
+        cell=[[[HomePageModelACell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identify] autorelease];
+    }
+    cell.delegate=self;
+    
+    DebugLog(@"m_array -> %@",m_AdArray);
+    AdFloorInfo *floor = m_AdArray[indexPath.row];
+    if (floor && [floor isKindOfClass:[AdFloorInfo class]])
+    {
+        NSLog(@"floor.keywordList  %@   %@",floor.keywordList,floor.title);
+        
+        cell.keywordsArray = floor.keywordList;
+        cell.selectionStyle=UITableViewCellSelectionStyleNone;
+        cell.tag=indexPath.row;
+        
+        if (floor.productList.count >= 1)
+        {
+            SpecialRecommendInfo *product = floor.productList[0];
+            [cell loadBigImg:product.imageUrl title:product.name subTitle:product.name];
+        }
+        
+        if (floor.productList.count >= 2)
+        {
+            SpecialRecommendInfo *product1 = floor.productList[1];
+            [cell loadFistImg:product1.imageUrl title:product1.name subTitle:product1.name];
+        }
+        
+        if (floor.productList.count >= 3)
+        {
+            SpecialRecommendInfo *product2 = floor.productList[2];
+            [cell loadsecondImg:product2.imageUrl title:product2.name subTitle:product2.name];
+        }
+        
+        [cell loadTitleImage:floor.titleImgUrl];
+        
+        
+        int style= 1;
+        NSString* tit=floor.title;
+        //        if (tit!=nil&&[tit isKindOfClass:[NSString class]]&&tit.length>0) {
+        [cell freshCell:indexPath.row style:style title:tit];
+        //        }
+    }
+    return cell;
+}
 
-    return nil;
+#pragma mark tableview 新的model A
+-(void)keywordBtnSelceted:(UIButton*)button type:(int)type{
+   /*叶亮*/
+    
+//    NSString *keyword=[button titleForState:UIControlStateNormal];
+//    if (keyword!=nil)
+//    {
+//        SearchResult *searchResult=[[[SearchResult alloc] initWithKeyword:keyword fromTag:FROM_AD_MODEL] autorelease];
+//        [self pushVC:searchResult animated:YES];
+//    }
+}
+
+#pragma mark - 楼层图片点击事件入口
+-(void)promotionTapcell:(HomePageModelACell*)cell withIdenty:(int)tag
+{
+    /*叶亮*/
+//    AdFloorInfo *floor = [OTSUtility safeObjectAtIndex:cell.tag inArray:m_AdArray];
+//    if (floor == nil)
+//    {
+//        return;
+//    }
+//    
+//    SpecialRecommendInfo *specialRecommentInfo = floor.productList[tag];
+//    if (specialRecommentInfo.type == kYaoSpecialProduct)
+//    {
+//        //进入商品页面
+//        [self enterIntoProductView:specialRecommentInfo.productId];
+//    }
+//    else if (specialRecommentInfo.type == kYaoSpecialBrand)
+//    {
+//        //品牌页面
+//        [self showAlertView:@"" alertMsg:@"暂无品牌页面" alertTag:12312];
+//        
+//    }
+//    else if (specialRecommentInfo.type == kYaoSpecialCatagory)
+//    {
+//        [self enterIntoCategoryList:specialRecommentInfo.catalogId];
+//    }
 }
 
 @end

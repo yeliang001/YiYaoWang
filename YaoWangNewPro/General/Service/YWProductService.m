@@ -35,72 +35,70 @@
         result.responseCode = response.statusCode;
         result.resultCode = [dataDic[@"result"] intValue];
         
-
+        NSDictionary *jiaoDianTuDic = dataDic[@"index_jiaodiantu"];
+        NSArray *specials = jiaoDianTuDic[@"specials"];
+        for (NSDictionary *dic in specials)
+        {
+            SpecialRecommendInfo *specialInfo = [[SpecialRecommendInfo alloc] init];
+            specialInfo.specialId = [dic[@"id"] stringValue];
+            specialInfo.imageUrl = dic[@"image_url"];
+            specialInfo.name = dic[@"name"];
+            specialInfo.type = [dic[@"type"] intValue];
+            specialInfo.sindex = [dic[@"sindex"] intValue];
+            specialInfo.specialType = [dic[@"specialtype"] intValue];
+            specialInfo.brandId = [dic[@"brandid"] intValue];
+            specialInfo.catalogId = [dic[@"catalogid"] intValue];
+            specialInfo.productId = [dic[@"productid"] intValue];
             
-            NSDictionary *jiaoDianTuDic = dataDic[@"index_jiaodiantu"];
-            NSArray *specials = jiaoDianTuDic[@"specials"];
-            for (NSDictionary *dic in specials)
+            [resultList addObject:specialInfo];
+            [specialInfo release];
+        }
+
+        //楼层广告
+        NSMutableArray *adFloorList = [[[NSMutableArray alloc] init] autorelease];
+        NSArray *floorArr = dataDic[@"index_ggl"];
+        for (NSDictionary *dic in floorArr)
+        {
+            AdFloorInfo *floor = [[AdFloorInfo alloc] init];
+            NSDictionary *tiltDic = dic[@"title"];
+            floor.titleImgUrl = tiltDic[@"image_url"];
+            floor.title = tiltDic[@"name"];
+            
+            NSMutableArray *productListInAd = [[[NSMutableArray alloc] init] autorelease];
+            NSArray *indexArr = @[@"3",@"1",@"2"];
+            for (int i = 0;  i < 3;  ++i)
             {
-                SpecialRecommendInfo *specialInfo = [[SpecialRecommendInfo alloc] init];
-                specialInfo.specialId = [dic[@"id"] stringValue];
-                specialInfo.imageUrl = dic[@"image_url"];
-                specialInfo.name = dic[@"name"];
-                specialInfo.type = [dic[@"type"] intValue];
-                specialInfo.sindex = [dic[@"sindex"] intValue];
-                specialInfo.specialType = [dic[@"specialtype"] intValue];
-                specialInfo.brandId = [dic[@"brandid"] intValue];
-                specialInfo.catalogId = [dic[@"catalogid"] intValue];
-                specialInfo.productId = [dic[@"productid"] intValue];
+                NSString *ggl = [NSString stringWithFormat:@"index_ggl_ggw_%d",[indexArr[i] intValue]];
                 
-                [resultList addObject:specialInfo];
+                NSDictionary * p1Dic = dic[ggl];
+                SpecialRecommendInfo *specialInfo = [[SpecialRecommendInfo alloc] init];
+                specialInfo.specialId = [p1Dic[@"id"] stringValue];
+                specialInfo.imageUrl = p1Dic[@"image_url"];
+                specialInfo.name = p1Dic[@"name"];
+                specialInfo.type = [p1Dic[@"type"] intValue];
+                specialInfo.sindex = [p1Dic[@"sindex"] intValue];
+                specialInfo.specialType = [p1Dic[@"specialtype"] intValue];
+                
+                specialInfo.brandId = [p1Dic[@"brandid"] intValue];
+                specialInfo.catalogId = [p1Dic[@"catalogid"] intValue];
+                specialInfo.productId = [p1Dic[@"productid"] intValue];
+                
+                [productListInAd addObject: specialInfo];
                 [specialInfo release];
             }
-
-            //楼层广告
-            NSMutableArray *adFloorList = [[[NSMutableArray alloc] init] autorelease];
-            NSArray *floorArr = dataDic[@"index_ggl"];
-            for (NSDictionary *dic in floorArr)
-            {
-                AdFloorInfo *floor = [[AdFloorInfo alloc] init];
-                NSDictionary *tiltDic = dic[@"title"];
-                floor.titleImgUrl = tiltDic[@"image_url"];
-                floor.title = tiltDic[@"name"];
-                
-                NSMutableArray *productListInAd = [[[NSMutableArray alloc] init] autorelease];
-                NSArray *indexArr = @[@"3",@"1",@"2"];
-                for (int i = 0;  i < 3;  ++i)
-                {
-                    NSString *ggl = [NSString stringWithFormat:@"index_ggl_ggw_%d",[indexArr[i] intValue]];
-                    
-                    NSDictionary * p1Dic = dic[ggl];
-                    SpecialRecommendInfo *specialInfo = [[SpecialRecommendInfo alloc] init];
-                    specialInfo.specialId = [p1Dic[@"id"] stringValue];
-                    specialInfo.imageUrl = p1Dic[@"image_url"];
-                    specialInfo.name = p1Dic[@"name"];
-                    specialInfo.type = [p1Dic[@"type"] intValue];
-                    specialInfo.sindex = [p1Dic[@"sindex"] intValue];
-                    specialInfo.specialType = [p1Dic[@"specialtype"] intValue];
-                    
-                    specialInfo.brandId = [p1Dic[@"brandid"] intValue];
-                    specialInfo.catalogId = [p1Dic[@"catalogid"] intValue];
-                    specialInfo.productId = [p1Dic[@"productid"] intValue];
-                    
-                    [productListInAd addObject: specialInfo];
-                    [specialInfo release];
-                }
-                
-                floor.productList = productListInAd;
-                
-                NSString *keyword = dic[@"keyword"];
-                floor.keywordList = [keyword componentsSeparatedByString:@","];
-                
-                [adFloorList addObject:floor];
-                [floor release];
-            }
             
-            NSArray *resultArr = @[resultList,adFloorList];
+            floor.productList = productListInAd;
             
-            result.resultObject = resultArr;
+            NSString *keyword = dic[@"keyword"];
+            floor.keywordList = [keyword componentsSeparatedByString:@","];
+            
+            [adFloorList addObject:floor];
+            [floor release];
+        }
+        
+        NSArray *resultArr = @[resultList,adFloorList];
+        
+        result.resultObject = resultArr;
     }
     
     return [result autorelease];
