@@ -18,8 +18,8 @@
 #import "YWBaseService.h"
 #import "YWSystemService.h"
 #import "AdFloorInfo.h"
+#import "OTSSearchView.h"
 
-#define titleViewHeight 44.0
 #define navHeight 49.0
 
 #define ALERT_TAG_FORCEUPDATE_TRUE 101			// 强制更新
@@ -31,8 +31,8 @@
 
 #define moduleTag 302
 
-#define MODEAL_IMAGE_WIDTH  59
-#define MODEAL_IMAGE_HEIGHT 59
+#define MODEAL_IMAGE_WIDTH  50
+#define MODEAL_IMAGE_HEIGHT 50
 
 @interface HomeViewController ()
 
@@ -79,18 +79,7 @@
     if (ISIOS7) {
         yValue =20.0;
     }
-    
-    //logo栏
-    UIImageView *titleView=[[UIImageView alloc]initWithFrame:CGRectMake(0,yValue,320,titleViewHeight)];
-    [titleView setImage:[UIImage imageNamed:@"title_bg.png"]];
-    [self.view addSubview:titleView];
-    [titleView release];
-    
-    //搜索框考虑放在导航栏上，固定下来，不滚动
-    
-    //
-    yValue+=titleViewHeight;
-    
+
     //scroll view
     m_ScrollView=[[UIScrollView alloc] initWithFrame:CGRectMake(0,yValue,320,ApplicationHeight-yValue-navHeight)];
     /*因为yValue已经计算考虑了状态栏20像素的问题，所以这里不需要判断ios7下加20的问题*/
@@ -114,6 +103,17 @@
     [m_ScrollView addSubview:m_RefreshHeaderView];
     [m_RefreshHeaderView refreshLastUpdatedDate];
     
+    //搜索   // 叶亮：加入搜索栏
+//	OTSSearchView *searchView=[[OTSSearchView alloc] initWithFrame:CGRectMake(0, yValue, 320, 40) delegate:m_Search];
+//    [self.view addSubview:searchView];
+//    [searchView release];
+//    yValue+=40.0;
+    
+    //扫描
+//    [self removeSubControllerClass:[Scan class]];
+//    Scan *scan=[[[Scan alloc] initWithNibName:@"Scan" bundle:nil] autorelease];
+//    [self pushVC:scan animated:NO];
+    
     //page view
     CGFloat yValueInScroll=0.0;
     m_PageView=[[OTSPageView alloc] initWithFrame:CGRectMake(0, yValueInScroll, 320, 120) delegate:self showStatusBar:YES sleepTime:5];
@@ -136,10 +136,10 @@
     [m_ScrollView addSubview:moduleView];
     [moduleView release];
     
-    CGFloat xValue=14.0;
-    CGFloat yValue=8.0;
+    CGFloat xValue=7.0;
+    CGFloat yValue=18.0;
     int i;
-    for (i=0; i<4; i++)
+    for (i=0; i<5; i++)
     {
         UIButton *button=[[UIButton alloc] initWithFrame:CGRectMake(xValue, yValue, MODEAL_IMAGE_WIDTH, MODEAL_IMAGE_HEIGHT)];
         [button setTag:100+i];
@@ -148,20 +148,24 @@
         switch (i)
         {
             case 0:
-                moduleName = @"浏览历史";
-                image = [UIImage imageNamed:@"modelhistory.png"];
+                moduleName = @"当季热销";
+                image = [UIImage imageNamed:@"icon_home_recommend.png"];
                 break;
             case 1:
-                moduleName = @"团购";
-                image = [UIImage imageNamed:@"modeltuan.png"];
+                moduleName = @"对症找药";
+                image = [UIImage imageNamed:@"icon_home_gruop.png"];
                 break;
             case 2:
-                moduleName=@"扫描";
-                image=[UIImage imageNamed:@"modelscan.png"];
+                moduleName=@"我的收藏";
+                image=[UIImage imageNamed:@"icon_home_favorite.png"];
                 break;
             case 3:
-                moduleName=@"物流查询";
-                image=[UIImage imageNamed:@"modelflow.png"];
+                moduleName=@"浏览历史";
+                image=[UIImage imageNamed:@"icon_home_browsehistory.png"];
+                break;
+            case 4:
+                moduleName=@"物流跟踪";
+                image=[UIImage imageNamed:@"icon_home_tracker.png"];
                 break;
             default:
                 break;
@@ -173,7 +177,7 @@
         [button release];
         
         
-        UILabel *label=[[UILabel alloc] initWithFrame:CGRectMake(xValue-13, yValue+60, MODEAL_IMAGE_WIDTH+26, 30)];
+        UILabel *label=[[UILabel alloc] initWithFrame:CGRectMake(xValue-13, yValue+50, MODEAL_IMAGE_WIDTH+26, 30)];
         [label setBackgroundColor:[UIColor clearColor]];
         [label setText:moduleName];
         [label setFont:[UIFont systemFontOfSize:14.0]];
@@ -181,15 +185,9 @@
         [moduleView addSubview:label];
         [label release];
         
-        if (i == 3)
-        {
-            xValue = 14.0;
-            yValue = 100.0;
-        }
-        else
-        {
-            xValue+=77.0;
-        }
+        
+        xValue+=64.0;
+    
         
     }
     modelATable=[[UITableView alloc]initWithFrame:CGRectMake(0, yValueInScroll+100, 320, 750) style:UITableViewStylePlain];
@@ -218,28 +216,37 @@
 //            [self pushVC:browse animated:YES];
             break;
         }
+        case 1:
+        {
+            //团购
+            //            [self enterIntoGroupList];
             
+            break;
+        }
+            
+        case 2:
+        {
+            //扫描
+            //            [self removeSubControllerClass:[Scan class]];
+            //            Scan *scan=[[[Scan alloc] initWithNibName:@"Scan" bundle:nil] autorelease];
+            //            [self pushVC:scan animated:NO];
+            break;
+        }
         case 3:
         {
             //物流查询
 //            [self enterLogisticQuery];
             break;
         }
-        case 2:
+        case 4:
         {
             //扫描
-//            [self removeSubControllerClass:[Scan class]];
-//            Scan *scan=[[[Scan alloc] initWithNibName:@"Scan" bundle:nil] autorelease];
-//            [self pushVC:scan animated:NO];
+            //            [self removeSubControllerClass:[Scan class]];
+            //            Scan *scan=[[[Scan alloc] initWithNibName:@"Scan" bundle:nil] autorelease];
+            //            [self pushVC:scan animated:NO];
             break;
         }
-        case 1:
-        {
-            //团购
-//            [self enterIntoGroupList];
-            
-            break;
-        }
+        
             
         default:
             break;
@@ -517,7 +524,7 @@
     [modelATable reloadData];
     [self adjustModulesHeight];
     int  increace = m_AdArray.count;
-    [m_ScrollView setContentSize:CGSizeMake(320, yValueInScroll+increace*250.0)];
+    [m_ScrollView setContentSize:CGSizeMake(320, yValueInScroll+increace*(210.0-25.0))];
 }
 
 -(void)adjustModulesHeight{
@@ -564,7 +571,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 250.0;
+    return 210.00-25.0;
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -603,9 +610,6 @@
             SpecialRecommendInfo *product2 = floor.productList[2];
             [cell loadsecondImg:product2.imageUrl title:product2.name subTitle:product2.name];
         }
-        
-        [cell loadTitleImage:floor.titleImgUrl];
-        
         
         int style= 1;
         NSString* tit=floor.title;
@@ -654,6 +658,27 @@
 //    {
 //        [self enterIntoCategoryList:specialRecommentInfo.catalogId];
 //    }
+}
+
+#pragma mark    取消加载view
+-(void)releaseResource
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    OTS_SAFE_RELEASE(m_ScrollView);
+    OTS_SAFE_RELEASE(hotTopFivePage);
+    OTS_SAFE_RELEASE(m_RefreshHeaderView);
+    OTS_SAFE_RELEASE(m_PageView);
+}
+-(void)viewDidUnload
+{
+	[self releaseResource];
+    [super viewDidUnload];
+}
+- (void)dealloc {
+	[self releaseResource];
+    OTS_SAFE_RELEASE(m_AdArray);
+    OTS_SAFE_RELEASE(modelATable);
+    [super dealloc];
 }
 
 @end

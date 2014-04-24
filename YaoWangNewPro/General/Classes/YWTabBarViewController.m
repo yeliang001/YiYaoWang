@@ -44,20 +44,20 @@
     [imgArray addObject:[UIImage imageNamed:@"tabbar_category_unsel.png"]];
     [imgArray addObject:[UIImage imageNamed:@"tabbar_cart_unsel.png"]];
     [imgArray addObject:[UIImage imageNamed:@"tabbar_store_unsel.png"]];
-    [imgArray addObject:[UIImage imageNamed:@"tabbar_more_unsel.png"]];
+   
     
     [selImgArray addObject:[UIImage imageNamed:@"tabbar_homepage_sel.png"]];
     [selImgArray addObject:[UIImage imageNamed:@"tabbar_category_sel.png"]];
     [selImgArray addObject:[UIImage imageNamed:@"tabbar_cart_sel.png"]];
     [selImgArray addObject:[UIImage imageNamed:@"tabbar_store_sel.png"]];
-    [selImgArray addObject:[UIImage imageNamed:@"tabbar_more_sel.png"]];
+    
     
     for (int i=0; i < vcCount; i++)
     {
         NSLog(@"self.tabBar.subviews  %@",self.tabBar.subviews);
         
         UIView *subView=[self.tabBar.subviews objectAtIndex:i];
-        UIImageView *imgView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 64, 50)];
+        UIImageView *imgView=[[UIImageView alloc] initWithFrame:CGRectMake(8+i*80, 0, 64, 50)];
         [imgView setImage:[imgArray objectAtIndex:i]];
         [subView addSubview:imgView];
         [tabViews addObject:imgView];
