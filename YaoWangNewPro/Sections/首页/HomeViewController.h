@@ -13,6 +13,8 @@
 #import "ResultInfo.h"
 #import "UserManageTool.h"
 #import "HomePageModelACell.h"
+#import "Search.h"
+#import "OTSSearchView.h"
 @interface HomeViewController : YWBaseViewController<EGORefreshTableHeaderDelegate,UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,HomePageModelACellDelegate>
 {
     
@@ -23,6 +25,8 @@
     BOOL isRefreshingHotPage;
     BOOL isRefreshingAd;
     NSMutableArray *m_AdArray;                              //广告列表
+    Search *m_Search;//搜索视图控制器
+    OTSSearchView *searchView;
 }
 @property(retain,nonatomic)UITableView* modelATable; //模块A的列表
 -(void)initHomePage;                                        //首页初始化

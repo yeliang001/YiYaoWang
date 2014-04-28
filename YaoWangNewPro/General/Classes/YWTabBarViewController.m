@@ -44,7 +44,7 @@
     [imgArray addObject:[UIImage imageNamed:@"tabbar_category_unsel.png"]];
     [imgArray addObject:[UIImage imageNamed:@"tabbar_cart_unsel.png"]];
     [imgArray addObject:[UIImage imageNamed:@"tabbar_store_unsel.png"]];
-   
+    
     
     [selImgArray addObject:[UIImage imageNamed:@"tabbar_homepage_sel.png"]];
     [selImgArray addObject:[UIImage imageNamed:@"tabbar_category_sel.png"]];
@@ -57,7 +57,11 @@
         NSLog(@"self.tabBar.subviews  %@",self.tabBar.subviews);
         
         UIView *subView=[self.tabBar.subviews objectAtIndex:i];
-        UIImageView *imgView=[[UIImageView alloc] initWithFrame:CGRectMake(8+i*80, 0, 64, 50)];
+        UIImageView *imgView=[[UIImageView alloc] init];
+        if (ISIOS7) {
+            imgView.frame = CGRectMake(0, 0, 64, 50);
+        }else
+            imgView.frame = CGRectMake(80*i, 0, 64, 50);
         [imgView setImage:[imgArray objectAtIndex:i]];
         [subView addSubview:imgView];
         [tabViews addObject:imgView];

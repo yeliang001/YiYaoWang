@@ -22,9 +22,11 @@
     [advTitle release];
     [super dealloc];
 }
+
 @synthesize delegate;
 @synthesize keywordsArray;
 @synthesize advTitle;
+
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -67,6 +69,7 @@
     }
     return self;
 }
+
 -(void)promotionTap:(id)sender{
     int tag;
         UITapGestureRecognizer* ges=(UITapGestureRecognizer*)sender;
@@ -89,7 +92,6 @@
         btStr=@"modelkeyword2.png";
     }else if(tag==2){
         titColor=[UIColor colorWithRed:(38.0/255.0) green:(61.0/255.0) blue:(102.0/255.0) alpha:1];
-        
         btStr=@"modelkeyword1.png";
     }
     if (title!=nil&&[title isKindOfClass:[NSString class]]&&title.length>0) {

@@ -100,14 +100,14 @@
     }
     m_RefreshHeaderView=[[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0, -m_ScrollView.bounds.size.height, 320, m_ScrollView.bounds.size.height)];
     m_RefreshHeaderView.delegate=self;
-    [m_ScrollView addSubview:m_RefreshHeaderView];
+    [m_ScrollView insertSubview:m_RefreshHeaderView belowSubview:searchView];
+//    [m_ScrollView addSubview:m_RefreshHeaderView];
     [m_RefreshHeaderView refreshLastUpdatedDate];
     
     //搜索   // 叶亮：加入搜索栏
-//	OTSSearchView *searchView=[[OTSSearchView alloc] initWithFrame:CGRectMake(0, yValue, 320, 40) delegate:m_Search];
-//    [self.view addSubview:searchView];
-//    [searchView release];
-//    yValue+=40.0;
+	searchView=[[OTSSearchView alloc] initWithFrame:CGRectMake(0, 80, 280, 40) delegate:m_Search];
+    [self.view addSubview:searchView];
+    [searchView release];
     
     //扫描
 //    [self removeSubControllerClass:[Scan class]];
@@ -660,6 +660,30 @@
 //    }
 }
 
+#pragma mark    scrollView相关delegate
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (scrollView==m_ScrollView) {
+        if (scrollView.contentOffset.y>80.0) {
+            searchView.frame = CGRectMake(0, 0, 280, 40);
+        }
+        else if (scrollView.contentOffset.y>0.0 && scrollView.contentOffset.y<=80.0){
+            searchView.frame = CGRectMake(0, 80.0-scrollView.contentOffset.y, 280, 40);
+        }
+        else if(scrollView.contentOffset.y<0.0){
+            searchView.frame = CGRectMake(0, 80, 280, 40);
+        }
+        [m_RefreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+    }
+}
+
+-(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+	if (scrollView==m_ScrollView) {
+        [m_RefreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+    }
+}
+
 #pragma mark    取消加载view
 -(void)releaseResource
 {
@@ -668,6 +692,7 @@
     OTS_SAFE_RELEASE(hotTopFivePage);
     OTS_SAFE_RELEASE(m_RefreshHeaderView);
     OTS_SAFE_RELEASE(m_PageView);
+    OTS_SAFE_RELEASE(searchView);
 }
 -(void)viewDidUnload
 {
